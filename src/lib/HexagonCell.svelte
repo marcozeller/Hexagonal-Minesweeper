@@ -1,12 +1,23 @@
-<script>
-    export let content;
-    export let state;
-    export let x;
-    export let y;
+<script lang="ts">
+	export let content: string | number;
+	export let state: string;
+	export let x: number;
+	export let y: number;
 
+    const clicked_on = () => {
+        console.log(`clicked on ${x}, ${y}`);
+        state = "open";
+    }
 </script>
 
-<div class="hexagon">{content}</div>
+{#if state == "hidden"}
+    <div class="hexagon hidden" on:click={clicked_on}></div>
+{:else if state == "open" && content == "mine"}
+    <div class="hexagon red">{content}</div>
+{:else if state == "open"}
+    <div class="hexagon open">{content}</div>
+{/if}
+    
 
 <style>
 	.hexagon {
@@ -15,7 +26,6 @@
 		align-items: center;
 		color: #fff;
 
-		background: #111;
 		margin: 1px;
 		transition: 2s;
 
@@ -23,8 +33,16 @@
 		height: 110px;
 		width: 100px;
 	}
-    .hexagon:hover {
-        background: #555;
+    .hidden {
+        background: #111;
     }
-
+    .red {
+        background: #500;
+    }
+    .open {
+		background: #555;
+    }
+	.hexagon.hidden:hover {
+		background: #333;
+	}
 </style>

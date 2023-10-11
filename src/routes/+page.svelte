@@ -1,7 +1,7 @@
-<script>
+<script lang="ts">
 	import HexagonCell from '$lib/HexagonCell.svelte';
-	let size_field = 8;
-	let num_mines = 5;
+	let size_field: number = 8;
+	let num_mines: number = 20;
 	let field = Array(size_field).fill(null);
 	for (let i = 0; i < size_field; i++) {
 		field[i] = Array(size_field).fill(null);
@@ -66,7 +66,7 @@
 					field[x][y].content++;
 				}
 				// for odd rows, check cell below-left for mine
-				if (x < size_field - 1 && y > 0 && field[x + 1][y-1].content === 'mine') {
+				if (x < size_field - 1 && y > 0 && field[x + 1][y - 1].content === 'mine') {
 					field[x][y].content++;
 				}
 				// for odd rows, check cell below-right for mine
