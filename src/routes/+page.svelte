@@ -7,7 +7,7 @@
 {#each field as row, i}
 	<div class="row">
     {#each row as cell, j}
-		<div class="hexagon pointy"> {i}, {j}</div>
+		<div class="hexagon"> {i}, {j}</div>
     {/each}
 	</div>
 {/each}
@@ -25,8 +25,6 @@
     .row:nth-child(odd){
         margin-left: 51px;
     }
-    .row:nth-child(even){
-    }
 	.hexagon {
         display: flex;
         justify-content: center;
@@ -36,13 +34,7 @@
 		background: #111;
 		margin: 1px;
 		transition: 2s;
-	}
-	.hexagon.flat {
-		clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-		height: 100px;
-		width: 110px;
-	}
-	.hexagon.pointy {
+
 		clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
 		height: 110px;
 		width: 100px;
