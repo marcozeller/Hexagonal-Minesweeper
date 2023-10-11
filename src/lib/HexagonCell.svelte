@@ -6,7 +6,7 @@
 
 </script>
 
-<div class="hexagon">{x}, {y} {content}</div>
+<div class="hexagon">{content}</div>
 
 <style>
 	.hexagon {
