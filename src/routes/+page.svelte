@@ -1,4 +1,5 @@
 <script>
+    import HexagonCell from '$lib/HexagonCell.svelte';
 	let size_field = 5;
 	let num_mines = 5;
 	let field = Array(size_field).fill(null);
@@ -26,10 +27,10 @@
 </script>
 
 <div class="field">
-	{#each field as row, i}
+	{#each field as row, x}
 		<div class="row">
-			{#each row as cell, j}
-				<div class="hexagon">{i}, {j} {cell.content}</div>
+			{#each row as cell, y}
+                <HexagonCell content={cell.content} x={x} y={y} bind:state={cell.state}/>
 			{/each}
 		</div>
 	{/each}
@@ -48,21 +49,4 @@
 	.row:nth-child(odd) {
 		margin-left: 51px;
 	}
-	.hexagon {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		color: #fff;
-
-		background: #111;
-		margin: 1px;
-		transition: 2s;
-
-		clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-		height: 110px;
-		width: 100px;
-	}
-    .hexagon:hover {
-        background: #555;
-    }
 </style>
