@@ -24,53 +24,66 @@
 		}
 		field[x][y] = { state: 'hidden', content: 'mine' };
 	}
+
+	const get_neighbor_coordinates = (x: number, y: number) => {
+		let neighbor_coordinates = [];
+		// add cell to the left
+		if (y > 0 && field[x][y - 1].content === 'mine') {
+			neighbor_coordinates.push([x, y - 1]);
+		}
+		// add cell to the right
+		if (y < size_field - 1 && field[x][y + 1].content === 'mine') {
+			neighbor_coordinates.push([x, y + 1]);
+		}
+		// neighbors above and below differ for even and odd rows
+		if (x % 2 == 0) {
+			// for even rows, add cell above-left
+			if (x > 0 && field[x - 1][y].content === 'mine') {
+				neighbor_coordinates.push([x - 1, y]);
+			}
+			// for even rows, add cell above-right
+			if (x > 0 && y < size_field - 1 && field[x - 1][y + 1].content === 'mine') {
+				neighbor_coordinates.push([x - 1, y + 1]);
+			}
+			// for even rows, add cell below-left
+			if (x < size_field - 1 && field[x + 1][y].content === 'mine') {
+				neighbor_coordinates.push([x + 1, y]);
+			}
+			// for even rows, add cell below-right
+			if (x < size_field - 1 && y < size_field - 1 && field[x + 1][y + 1].content === 'mine') {
+				neighbor_coordinates.push([x + 1, y + 1]);
+			}
+		} else if (x % 2 == 1) {
+			// for odd rows, add cell above-left
+			if (x > 0 && y > 0 && field[x - 1][y - 1].content === 'mine') {
+				neighbor_coordinates.push([x - 1, y - 1]);
+			}
+			// for odd rows, add cell above-right
+			if (x > 0 && field[x - 1][y].content === 'mine') {
+				neighbor_coordinates.push([x - 1, y]);
+			}
+			// for odd rows, add cell below-left
+			if (x < size_field - 1 && y > 0 && field[x + 1][y - 1].content === 'mine') {
+				neighbor_coordinates.push([x + 1, y - 1]);
+			}
+			// for odd rows, add cell below-right
+			if (x < size_field - 1 && field[x + 1][y].content === 'mine') {
+				neighbor_coordinates.push([x + 1, y]);
+			}
+		}
+		return neighbor_coordinates;
+	};
+
 	// fill in numbers for none-mine cells
 	for (let x = 0; x < size_field; x++) {
 		for (let y = 0; y < size_field; y++) {
 			if (field[x][y].content === 'mine') {
 				continue;
 			}
-			// check cell to the left for mine
-			if (y > 0 && field[x][y - 1].content === 'mine') {
-				field[x][y].content++;
-			}
-			// check cell to the right for mine
-			if (y < size_field - 1 && field[x][y + 1].content === 'mine') {
-				field[x][y].content++;
-			}
-			// neighbors above and below differ for even and odd rows
-			if (x % 2 == 0) {
-				// for even rows, check cell above-left for mine
-				if (x > 0 && field[x - 1][y].content === 'mine') {
-					field[x][y].content++;
-				}
-				// for even rows, check cell above-right for mine
-				if (x > 0 && y < size_field - 1 && field[x - 1][y + 1].content === 'mine') {
-					field[x][y].content++;
-				}
-				// for even rows, check cell below-left for mine
-				if (x < size_field - 1 && field[x + 1][y].content === 'mine') {
-					field[x][y].content++;
-				}
-				// for even rows, check cell below-right for mine
-				if (x < size_field - 1 && y < size_field - 1 && field[x + 1][y + 1].content === 'mine') {
-					field[x][y].content++;
-				}
-			} else if (x % 2 == 1) {
-				// for odd rows, check cell above-left for mine
-				if (x > 0 && y > 0 && field[x - 1][y - 1].content === 'mine') {
-					field[x][y].content++;
-				}
-				// for odd rows, check cell above-right for mine
-				if (x > 0 && field[x - 1][y].content === 'mine') {
-					field[x][y].content++;
-				}
-				// for odd rows, check cell below-left for mine
-				if (x < size_field - 1 && y > 0 && field[x + 1][y - 1].content === 'mine') {
-					field[x][y].content++;
-				}
-				// for odd rows, check cell below-right for mine
-				if (x < size_field - 1 && field[x + 1][y].content === 'mine') {
+			let neighbor_coordinates = get_neighbor_coordinates(x, y);
+			for (let i = 0; i < neighbor_coordinates.length; i++) {
+				let [xi, yi] = neighbor_coordinates[i];
+				if(field[xi][yi].content === 'mine'){
 					field[x][y].content++;
 				}
 			}
